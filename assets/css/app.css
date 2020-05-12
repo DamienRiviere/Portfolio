@@ -1,3 +1,132 @@
 body {
-    background-color: lightgray;
+    margin: 0;
+    font-family: 'Comfortaa', cursive !important;
+}
+
+.masthead {
+    height: 100vh;
+    min-height: 500px;
+    background-image: url('../../public/img/background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.navbar {
+    background-color: #ef5350;
+}
+
+.nav-link {
+    color: rgba(255,255,255,.8) !important;
+}
+
+.nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.8);
+    color:#d32f2f!important;
+    font-weight: bold;
+}
+
+.navbar-brand {
+    color: rgba(255,255,255,.9) !important;
+}
+
+.header-title {
+    text-shadow: 1px 1px 3px #000000;
+    font-weight: lighter;
+}
+
+.text-color-red {
+    color: #ef5350;
+}
+
+.about-social {
+    color: #ef5350;
+    font-size: 2em;
+}
+
+ul.timeline {
+    list-style-type: none;
+    position: relative;
+    padding-left: 1.5rem;
+}
+
+ul.timeline:before {
+    content: ' ';
+    background-color: rgba(239, 83, 80, 0.7);
+    display: inline-block;
+    position: absolute;
+    left: 16px;
+    width: 4px;
+    height: 100%;
+    z-index: 400;
+    border-radius: 1rem;
+}
+
+li.timeline-item {
+    margin: 20px 0;
+}
+
+.timeline-arrow {
+    border-top: 0.5rem solid transparent;
+    border-right: 0.5rem solid #fff;
+    border-bottom: 0.5rem solid transparent;
+    display: block;
+    position: absolute;
+    left: 2rem;
+}
+
+li.timeline-item::before {
+    content: ' ';
+    background: #ddd;
+    display: inline-block;
+    position: absolute;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    left: 11px;
+    width: 14px;
+    height: 14px;
+    z-index: 400;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.skills-list li {
+    display: inline-block;
+    padding: 0 1em;
+    margin: 5px;
+    height: 36px;
+    line-height: 36px;
+    border-radius: 18px;
+    color: #fff;
+    background: #ef5350;
+}
+
+.card {
+    opacity: 1;
+    transition: .5s ease;
+    backface-visibility: hidden;
+}
+
+.card-img-overlay {
+    transition: .5s ease;
+    opacity: 0;
+}
+
+.card:hover img {
+    opacity: 0.3;
+}
+
+.card:hover .card-img-overlay {
+    opacity: 1;
+}
+
+.background-color-red {
+    background-color: #ef5350 !important;
+}
+
+.footer-color {
+    color: rgba(255,255,255,.8) !important;
+}
+
+.footer-background {
+    background-color: rgba(239, 83, 80, 0.9);
 }
