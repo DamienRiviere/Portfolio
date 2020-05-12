@@ -27,6 +27,6 @@ final class Home
      */
     public function __invoke(ViewResponder $responder)
     {
-        return $responder('base.html.twig');
+        return $responder('home/index.html.twig');
     }
 }
