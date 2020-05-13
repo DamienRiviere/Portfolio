@@ -1,3 +1,2 @@
-#index:
-#    path: /
-#    controller: App\Action\DefaultController::index
+authentication_logout:
+  path: /logout
