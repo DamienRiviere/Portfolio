@@ -130,3 +130,13 @@ li.timeline-item::before {
 .footer-background {
     background-color: rgba(239, 83, 80, 0.9);
 }
+
+.body-login {
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+}
+
+.card-login {
+    margin-top: 40%;
+}
