@@ -34,11 +34,16 @@
                         <span>Projet</span>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/admin">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-terminal"></i>
                         <span>Technologie</span>
                     </a>
+                    <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+                        <a class="dropdown-item" href="{{ path('admin_technology_index') }}">Liste technos</a>
+                        <a class="dropdown-item" href="{{ path('admin_technology_new') }}">Nouvelle techno</a>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/admin">

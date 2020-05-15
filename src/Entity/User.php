@@ -14,31 +14,37 @@ class User implements UserInterface
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @var int
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @var string
      */
     private $email;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @var string
      */
     private $password;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @var string
      */
     private $username;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @var string
      */
     private $slug;
 
     /**
      * @ORM\Column(type="array")
+     * @var array
      */
     private $roles = [];
 
@@ -112,7 +118,7 @@ class User implements UserInterface
         return null;
     }
 
-    public function eraseCredentials()
+    public function eraseCredentials(): void
     {
         return;
     }
