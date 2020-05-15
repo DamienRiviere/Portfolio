@@ -27,8 +27,11 @@ final class RedirectResponder
      * @param int $statusCode
      * @return RedirectResponse
      */
-    public function __invoke(string $routeName, array $paramsRoute = [], int $statusCode = Response::HTTP_FOUND): RedirectResponse
-    {
+    public function __invoke(
+        string $routeName,
+        array $paramsRoute = [],
+        int $statusCode = Response::HTTP_FOUND
+    ): RedirectResponse {
         return new RedirectResponse($this->urlGenerator->generate($routeName, $paramsRoute), $statusCode);
     }
 }

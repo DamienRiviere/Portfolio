@@ -2,6 +2,8 @@
 
 namespace App\Domain\Technology;
 
+use App\Entity\Technology;
+
 class TechnologyDTO
 {
 
@@ -10,6 +12,17 @@ class TechnologyDTO
 
     /** @var string */
     protected $slug;
+
+    public function updateToDto(Technology $technology): TechnologyDTO
+    {
+        $dto = new TechnologyDTO();
+        $dto
+            ->setName($technology->getName())
+            ->setSlug($technology->getSlug())
+        ;
+
+        return $dto;
+    }
 
     /**
      * @return string

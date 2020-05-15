@@ -44,6 +44,16 @@ class Technology
         return $technology;
     }
 
+    public static function update(TechnologyDTO $dto, Technology $technology): Technology
+    {
+        $technology
+            ->setName($dto->getName())
+            ->setSlug($dto->getSlug())
+        ;
+
+        return $technology;
+    }
+
     /**
      * Initialize slug when a technology is created
      *
