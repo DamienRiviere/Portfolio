@@ -4,8 +4,10 @@ namespace App\Action\Admin\Technology;
 
 use App\Domain\Helper\FlashMessageHelper;
 use App\Domain\Helper\FormHelper;
+use App\Domain\Technology\TechnologyDTO;
 use App\Domain\Technology\TechnologyType;
-use App\Entity\Technology;
+use App\Entity\Technology as TechnologyEntity;
+use App\Repository\TechnologyRepository;
 use App\Responder\RedirectResponder;
 use App\Responder\ViewResponder;
 use Doctrine\ORM\EntityManagerInterface;
@@ -17,16 +19,19 @@ use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
 /**
- * Class NewTechnology
+ * Class UpdateTechnology
  * @package App\Action\Admin\Technology
  *
- * @Route("/admin/technology/new", name="admin_technology_new")
+ * @Route("/admin/technology/update/{slug}", name="admin_technology_update")
  */
-final class NewTechnology
+final class UpdateTechnology
 {
 
     /** @var FormHelper */
     protected $formHelper;
+
+    /** @var TechnologyRepository */
+    protected $technoRepository;
 
     /** @var EntityManagerInterface */
     protected $em;
@@ -35,14 +40,20 @@ final class NewTechnology
     protected $flash;
 
     /**
-     * NewTechnology constructor.
+     * UpdateTechnology constructor.
      * @param FormHelper $formHelper
+     * @param TechnologyRepository $technologyRepository
      * @param EntityManagerInterface $em
      * @param FlashMessageHelper $flash
      */
-    public function __construct(FormHelper $formHelper, EntityManagerInterface $em, FlashMessageHelper $flash)
-    {
+    public function __construct(
+        FormHelper $formHelper,
+        TechnologyRepository $technologyRepository,
+        EntityManagerInterface $em,
+        FlashMessageHelper $flash
+    ) {
         $this->formHelper = $formHelper;
+        $this->technoRepository = $technologyRepository;
         $this->em = $em;
         $this->flash = $flash;
     }
@@ -50,21 +61,22 @@ final class NewTechnology
     /**
      * @param Request $request
      * @param ViewResponder $responder
+     * @param string $slug
      * @param RedirectResponder $redirect
      * @return Response
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    public function __invoke(Request $request, ViewResponder $responder, RedirectResponder $redirect)
+    public function __invoke(Request $request, ViewResponder $responder, string $slug, RedirectResponder $redirect)
     {
-        $form = $this->formHelper->getFormType($request, TechnologyType::class);
+        $technology = $this->technoRepository->findOneBy(['slug' => $slug]);
+        $form = $this->formHelper->getFormType($request, TechnologyType::class, TechnologyDTO::class, $technology);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $technology = Technology::create($form->getData());
-            $this->em->persist($technology);
+            TechnologyEntity::update($form->getData(), $technology);
             $this->em->flush();
-            $this->flash->getFlashMessageCreate();
+            $this->flash->getFlashMessageUpdate();
 
             return $redirect('admin_technology_index');
         }

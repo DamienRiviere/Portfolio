@@ -1,20 +1,40 @@
 {% extends 'admin/base.html.twig' %}
 
-{% block title %}Créer une technologie{% endblock %}
+{% set route = app.request.attributes.get("_route") %}
+
+{% block title %}
+    {% if route == "admin_technology_new" %}
+        Créer une technologie
+    {% else %}
+        Modifier une technologie
+    {% endif %}
+{% endblock %}
 
 {% block body %}
     <ol class="breadcrumb breadcrumb-sm">
         <li class="breadcrumb-item">
             <a href="#">Liste des technologies</a>
         </li>
-        <li class="breadcrumb-item active">Nouvelle technologie</li>
+        <li class="breadcrumb-item active">
+            {% if route == "admin_technology_new" %}
+                Créer une technologie
+            {% else %}
+                Modifier une technologie
+            {% endif %}
+        </li>
     </ol>
 
     {{ form_start(form) }}
 
     {{ form_row(form.name) }}
 
-    <button type="submit" class="btn btn-primary btn-block">Créer</button>
+    <button type="submit" class="btn btn-primary btn-block">
+        {% if route == "admin_technology_new" %}
+            Créer
+        {% else %}
+            Modifier
+        {% endif %}
+    </button>
 
     {{ form_end(form) }}
 
