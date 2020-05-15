@@ -45,10 +45,10 @@
                             <td>{{ techno.slug }}</td>
                             <td>
                                 <div class="btn-group" role="group">
-                                    <a href="{{ path('admin_technology_update', {'slug': techno.slug}) }}" class="btn btn-md btn-secondary" title="Modifier l'article">
+                                    <a href="{{ path('admin_technology_update', {'slug': techno.slug}) }}" class="btn btn-md btn-secondary" title="Modifier la technologie">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <a href="#" class="btn btn-md btn-danger delete-link" title="Supprimer l'article" data-toggle="modal" data-target="#delModal">
+                                    <a href="{{ path('admin_technology_delete', {'id': techno.id}) }}" class="btn btn-md btn-danger delete-link" title="Supprimer la technologie">
                                         <i class="fas fa-trash"></i>
                                     </a>
                                 </div>
