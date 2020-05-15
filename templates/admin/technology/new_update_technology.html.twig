@@ -1,0 +1,21 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Créer une technologie{% endblock %}
+
+{% block body %}
+    <ol class="breadcrumb breadcrumb-sm">
+        <li class="breadcrumb-item">
+            <a href="#">Liste des technologies</a>
+        </li>
+        <li class="breadcrumb-item active">Nouvelle technologie</li>
+    </ol>
+
+    {{ form_start(form) }}
+
+    {{ form_row(form.name) }}
+
+    <button type="submit" class="btn btn-primary btn-block">Créer</button>
+
+    {{ form_end(form) }}
+
+{% endblock %}
