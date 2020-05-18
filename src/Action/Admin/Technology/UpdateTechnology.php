@@ -60,7 +60,7 @@ final class UpdateTechnology
 
     /**
      * @param Request $request
-     * @param ViewResponder $responder
+     * @param ViewResponder $view
      * @param string $slug
      * @param RedirectResponder $redirect
      * @return Response
@@ -68,7 +68,7 @@ final class UpdateTechnology
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    public function __invoke(Request $request, ViewResponder $responder, string $slug, RedirectResponder $redirect)
+    public function __invoke(Request $request, ViewResponder $view, string $slug, RedirectResponder $redirect)
     {
         $technology = $this->technoRepository->findOneBy(['slug' => $slug]);
         $form = $this->formHelper->getFormType($request, TechnologyType::class, TechnologyDTO::class, $technology);
@@ -81,8 +81,8 @@ final class UpdateTechnology
             return $redirect('admin_technology_index');
         }
 
-        return $responder(
-            'admin/technology/new_update_technology.html.twig',
+        return $view(
+            'admin/technology/new_update.html.twig',
             [
                 'form' => $form->createView()
             ]

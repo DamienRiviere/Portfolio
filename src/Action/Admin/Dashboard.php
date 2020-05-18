@@ -19,14 +19,14 @@ final class Dashboard
 {
 
     /**
-     * @param ViewResponder $responder
+     * @param ViewResponder $view
      * @return Response
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    public function __invoke(ViewResponder $responder)
+    public function __invoke(ViewResponder $view)
     {
-        return $responder('admin/dashboard.html.twig');
+        return $view('admin/dashboard.html.twig');
     }
 }

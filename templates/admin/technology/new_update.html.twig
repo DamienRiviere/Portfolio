@@ -13,7 +13,7 @@
 {% block body %}
     <ol class="breadcrumb breadcrumb-sm">
         <li class="breadcrumb-item">
-            <a href="#">Liste des technologies</a>
+            <a href="{{ path('admin_technology_index') }}">Liste des technologies</a>
         </li>
         <li class="breadcrumb-item active">
             {% if route == "admin_technology_new" %}
@@ -24,18 +24,22 @@
         </li>
     </ol>
 
-    {{ form_start(form) }}
+    <div class="card">
+        <div class="card-body">
+            {{ form_start(form) }}
 
-    {{ form_row(form.name) }}
+            {{ form_row(form.name) }}
 
-    <button type="submit" class="btn btn-primary btn-block">
-        {% if route == "admin_technology_new" %}
-            Créer
-        {% else %}
-            Modifier
-        {% endif %}
-    </button>
+            <button type="submit" class="btn btn-primary btn-block">
+                {% if route == "admin_technology_new" %}
+                    Créer
+                {% else %}
+                    Modifier
+                {% endif %}
+            </button>
 
-    {{ form_end(form) }}
+            {{ form_end(form) }}
+        </div>
+    </div>
 
 {% endblock %}

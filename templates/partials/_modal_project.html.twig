@@ -1,0 +1,47 @@
+<div class="modal fade" id="modalProject" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header background-color-red">
+                <h5 class="modal-title text-white" id="exampleModalLabel">
+                    <i class="fas fa-book-open"></i>
+                    {{ project.name }}
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <!-- Modal Body -->
+            <div class="modal-body">
+                {%  set picture = project.picture %}
+                <img src="{{ asset('uploads/' ~ picture.name) }}" alt="{{ picture.description }}" class="img-fluid">
+
+                <hr>
+
+                <p>{{ project.description }}</p>
+
+                <p>Technologie utilisée :
+                    {% for technology in project.technology %}
+                    <span class="badge background-color-red text-white">{{ technology.name }}</span>
+                    {% endfor %}
+                </p>
+
+                <p class="small text-muted mb-0">{{ project.note }}</p>
+            </div>
+            <!-- Modal Footer -->
+            <div class="modal-footer d-flex justify-content-center">
+                <div class="btn-group btn-group-sm " role="group" aria-label="Basic example">
+                    <a href="{{ project.link }}" class="btn btn-secondary d-flex align-items-center justify-content-center" target="_blank">
+                        <i class="fas fa-search"></i>
+                        <p class="mb-0 ml-2">Voir le site</p>
+                    </a>
+                    <a href="{{ project.github }}" class="btn btn-secondary d-flex align-items-center justify-content-center" target="_blank">
+                        <i class="fab fa-github-square"></i>
+                        <p class="mb-0 ml-2">Github</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Taverne du JV -->

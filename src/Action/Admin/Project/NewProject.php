@@ -1,11 +1,13 @@
 <?php
 
-namespace App\Action\Admin\Technology;
+namespace App\Action\Admin\Project;
 
 use App\Domain\Helper\FlashMessageHelper;
 use App\Domain\Helper\FormHelper;
-use App\Domain\Technology\TechnologyType;
-use App\Entity\Technology;
+use App\Domain\Project\ProjectType;
+use App\Domain\Service\FileUploader;
+use App\Entity\Picture;
+use App\Entity\Project;
 use App\Responder\RedirectResponder;
 use App\Responder\ViewResponder;
 use Doctrine\ORM\EntityManagerInterface;
@@ -17,16 +19,22 @@ use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
 /**
- * Class NewTechnology
- * @package App\Action\Admin\Technology
+ * Class NewProject
+ * @package App\Action\Admin\Project
  *
- * @Route("/admin/technology/new", name="admin_technology_new")
+ * @Route("/admin/project/new", name="admin_project_new")
  */
-final class NewTechnology
+final class NewProject
 {
 
     /** @var FormHelper */
     protected $formHelper;
+
+    /** @var FileUploader */
+    protected $upload;
+
+    /** @var string */
+    protected $uploadDir;
 
     /** @var EntityManagerInterface */
     protected $em;
@@ -35,14 +43,21 @@ final class NewTechnology
     protected $flash;
 
     /**
-     * NewTechnology constructor.
+     * NewProject constructor.
      * @param FormHelper $formHelper
+     * @param string $uploadDir
      * @param EntityManagerInterface $em
      * @param FlashMessageHelper $flash
      */
-    public function __construct(FormHelper $formHelper, EntityManagerInterface $em, FlashMessageHelper $flash)
-    {
+    public function __construct(
+        FormHelper $formHelper,
+        string $uploadDir,
+        EntityManagerInterface $em,
+        FlashMessageHelper $flash
+    ) {
         $this->formHelper = $formHelper;
+        $this->uploadDir = $uploadDir;
+        $this->upload = new FileUploader($this->uploadDir);
         $this->em = $em;
         $this->flash = $flash;
     }
@@ -58,22 +73,24 @@ final class NewTechnology
      */
     public function __invoke(Request $request, ViewResponder $view, RedirectResponder $redirect)
     {
-        $form = $this->formHelper->getFormType($request, TechnologyType::class);
+        $form = $this->formHelper->getFormType($request, ProjectType::class);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $technology = Technology::create($form->getData());
-            $this->em->persist($technology);
+            $newFileName = $this->upload->upload($form->getData()->getPicture());
+            $project = Project::create($form->getData());
+            $picture = Picture::create($newFileName, $form->getData(), $project);
+
+            $this->em->persist($project);
+            $this->em->persist($picture);
             $this->em->flush();
+
             $this->flash->getFlashMessageCreate();
 
-            return $redirect('admin_technology_index');
+            return $redirect("admin_project_index");
         }
 
-        return $view(
-            'admin/technology/new_update.html.twig',
-            [
-                'form' => $form->createView()
-            ]
-        );
+        return $view("admin/project/new_update.html.twig", [
+            'form' => $form->createView()
+        ]);
     }
 }
