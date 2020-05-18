@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Domain\Technology\TechnologyDTO;
 use Cocur\Slugify\Slugify;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -31,6 +33,17 @@ class Technology
      * @var string
      */
     private $slug;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Project", mappedBy="technology")
+     * @var Collection
+     */
+    private $project;
+
+    public function __construct()
+    {
+        $this->project = new ArrayCollection();
+    }
 
     /**
      * @param TechnologyDTO $dto
@@ -91,6 +104,34 @@ class Technology
     public function setSlug(string $slug): self
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Project[]
+     */
+    public function getProject(): Collection
+    {
+        return $this->project;
+    }
+
+    public function addProject(Project $project): self
+    {
+        if (!$this->project->contains($project)) {
+            $this->project[] = $project;
+            $project->addTechnology($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProject(Project $project): self
+    {
+        if ($this->project->contains($project)) {
+            $this->project->removeElement($project);
+            $project->removeTechnology($this);
+        }
 
         return $this;
     }

@@ -32,15 +32,15 @@ final class Technology
     }
 
     /**
-     * @param ViewResponder $responder
+     * @param ViewResponder $view
      * @return Response
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    public function __invoke(ViewResponder $responder)
+    public function __invoke(ViewResponder $view)
     {
-        return $responder('admin/technology/index.html.twig', [
+        return $view('admin/technology/index.html.twig', [
             'technos' => $this->technologyRepository->findAll()
         ]);
     }

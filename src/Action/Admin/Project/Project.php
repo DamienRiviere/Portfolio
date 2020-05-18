@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Action;
+namespace App\Action\Admin\Project;
 
 use App\Repository\ProjectRepository;
 use App\Responder\ViewResponder;
@@ -11,19 +11,19 @@ use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
 /**
- * Class Home
- * @package App\Action
+ * Class Project
+ * @package App\Action\Admin\Project
  *
- * @Route("/", name="home")
+ * @Route("/admin/project", name="admin_project_index")
  */
-final class Home
+final class Project
 {
 
     /** @var ProjectRepository */
     protected $projectRepository;
 
     /**
-     * Home constructor.
+     * Project constructor.
      * @param ProjectRepository $projectRepository
      */
     public function __construct(ProjectRepository $projectRepository)
@@ -32,15 +32,15 @@ final class Home
     }
 
     /**
-     * @param ViewResponder $responder
+     * @param ViewResponder $view
      * @return Response
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    public function __invoke(ViewResponder $responder)
+    public function __invoke(ViewResponder $view)
     {
-        return $responder('home/index.html.twig', [
+        return $view('admin/project/index.html.twig', [
             'projects' => $this->projectRepository->findAll()
         ]);
     }
