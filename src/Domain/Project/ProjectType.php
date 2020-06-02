@@ -2,6 +2,7 @@
 
 namespace App\Domain\Project;
 
+use App\Domain\Form\EventListener\AddTextFieldListener;
 use App\Entity\Technology;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -9,10 +10,23 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ProjectType extends AbstractType
 {
+
+    /** @var RequestStack */
+    protected $request;
+
+    /**
+     * ProjectType constructor.
+     * @param RequestStack $request
+     */
+    public function __construct(RequestStack $request)
+    {
+        $this->request = $request;
+    }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -67,27 +81,6 @@ class ProjectType extends AbstractType
                 ]
             )
             ->add(
-                'picture',
-                FileType::class,
-                [
-                    'label' => "Image du projet",
-                    'required' => false,
-                    'attr' => [
-                        'placeholder' => 'Image du projet ...'
-                    ]
-                ]
-            )
-            ->add(
-                'pictureDescription',
-                TextType::class,
-                [
-                    'label' => 'Description de l\'image du projet',
-                    'attr' => [
-                        'placeholder' => 'Écrivez une description de l\'image du projet ...'
-                    ]
-                ]
-            )
-            ->add(
                 'github',
                 TextType::class,
                 [
@@ -107,6 +100,7 @@ class ProjectType extends AbstractType
                     ]
                 ]
             )
+            ->addEventSubscriber(new AddTextFieldListener($this->request))
         ;
     }
 

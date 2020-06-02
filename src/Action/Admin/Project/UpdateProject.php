@@ -4,10 +4,9 @@ namespace App\Action\Admin\Project;
 
 use App\Domain\Helper\FlashMessageHelper;
 use App\Domain\Helper\FormHelper;
+use App\Domain\Project\ProjectDTO;
 use App\Domain\Project\ProjectType;
-use App\Domain\Service\FileUploader;
-use App\Entity\Picture;
-use App\Entity\Project;
+use App\Repository\ProjectRepository;
 use App\Responder\RedirectResponder;
 use App\Responder\ViewResponder;
 use Doctrine\ORM\EntityManagerInterface;
@@ -17,24 +16,22 @@ use Symfony\Component\Routing\Annotation\Route;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
+use App\Entity\Project;
 
 /**
- * Class NewProject
+ * Class UpdateProject
  * @package App\Action\Admin\Project
  *
- * @Route("/admin/project/new", name="admin_project_new")
+ * @Route("/admin/project/update/{slug}", name="admin_project_update")
  */
-final class NewProject
+final class UpdateProject
 {
 
     /** @var FormHelper */
     protected $formHelper;
 
-    /** @var FileUploader */
-    protected $upload;
-
-    /** @var string */
-    protected $uploadDir;
+    /** @var ProjectRepository */
+    protected $projectRepository;
 
     /** @var EntityManagerInterface */
     protected $em;
@@ -43,21 +40,20 @@ final class NewProject
     protected $flash;
 
     /**
-     * NewProject constructor.
+     * UpdateProject constructor.
      * @param FormHelper $formHelper
-     * @param string $uploadDir
+     * @param ProjectRepository $projectRepository
      * @param EntityManagerInterface $em
      * @param FlashMessageHelper $flash
      */
     public function __construct(
         FormHelper $formHelper,
-        string $uploadDir,
+        ProjectRepository $projectRepository,
         EntityManagerInterface $em,
         FlashMessageHelper $flash
     ) {
         $this->formHelper = $formHelper;
-        $this->uploadDir = $uploadDir;
-        $this->upload = new FileUploader($this->uploadDir);
+        $this->projectRepository = $projectRepository;
         $this->em = $em;
         $this->flash = $flash;
     }
@@ -66,30 +62,26 @@ final class NewProject
      * @param Request $request
      * @param ViewResponder $view
      * @param RedirectResponder $redirect
+     * @param string $slug
      * @return Response
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    public function __invoke(Request $request, ViewResponder $view, RedirectResponder $redirect)
+    public function __invoke(Request $request, ViewResponder $view, RedirectResponder $redirect, string $slug)
     {
-        $form = $this->formHelper->getFormType($request, ProjectType::class, null);
+        $project = $this->projectRepository->findOneBy(["slug" => $slug]);
+        $form = $this->formHelper->getFormType($request, ProjectType::class, ProjectDTO::class, $project);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $newFileName = $this->upload->upload($form->getData()->getPicture());
-            $project = Project::create($form->getData());
-            $picture = Picture::create($newFileName, $form->getData(), $project);
-
-            $this->em->persist($project);
-            $this->em->persist($picture);
+            Project::update($form->getData(), $project);
             $this->em->flush();
+            $this->flash->getFlashMessageUpdate();
 
-            $this->flash->getFlashMessageCreate();
-
-            return $redirect("admin_project_index");
+            return $redirect('admin_project_index');
         }
 
-        return $view("admin/project/new_update.html.twig", [
+        return $view('admin/project/new_update.html.twig', [
             'form' => $form->createView()
         ]);
     }

@@ -20,8 +20,17 @@ class TechnologyFixtures extends Fixture
         $jquery = new Technology();
         $jquery->setName("Jquery");
 
+        $ajax = new Technology();
+        $ajax->setName("Ajax");
+
         $mysql = new Technology();
         $mysql->setName("MySQL");
+
+        $nginx = new Technology();
+        $nginx->setName("Nginx");
+
+        $twig = new Technology();
+        $twig->setName("Twig");
 
         $html = new Technology();
         $html->setName("HTML");
@@ -50,6 +59,9 @@ class TechnologyFixtures extends Fixture
         $adr = new Technology();
         $adr->setName("ADR");
 
+        $mvc = new Technology();
+        $mvc->setName("MVC");
+
         $wordpress = new Technology();
         $wordpress->setName("WordPress");
 
@@ -75,6 +87,10 @@ class TechnologyFixtures extends Fixture
         $manager->persist($wordpress);
         $manager->persist($phpstan);
         $manager->persist($phpcodesniffer);
+        $manager->persist($twig);
+        $manager->persist($mvc);
+        $manager->persist($nginx);
+        $manager->persist($ajax);
 
         $manager->flush();
     }

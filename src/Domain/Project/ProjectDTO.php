@@ -2,7 +2,9 @@
 
 namespace App\Domain\Project;
 
+use App\Entity\Project;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -42,20 +44,12 @@ class ProjectDTO
     protected $note;
 
     /**
-     * @Assert\File(
-     *     maxSize = "3000k",
-     *     mimeTypes = {"image/jpeg", "image/jpg", "image/png"},
-     *     mimeTypesMessage = "Le format de l'image doit être du JPEG, JPG ou PNG !"
-     * )
      * @var UploadedFile
      */
     protected $picture;
 
     /**
      * @var string
-     * @Assert\NotBlank(
-     *     message="Vous devez entrer une description pour l'image"
-     * )
      */
     protected $pictureDescription;
 
@@ -64,6 +58,21 @@ class ProjectDTO
 
     /** @var string */
     protected $link;
+
+    public function updateToDto(Project $project): ProjectDTO
+    {
+        $dto = new ProjectDTO();
+        $dto
+            ->setName($project->getName())
+            ->setDescription($project->getDescription())
+            ->setTechnology($project->getTechnology())
+            ->setNote($project->getNote())
+            ->setLink($project->getLink())
+            ->setGithub($project->getGithub())
+        ;
+
+        return $dto;
+    }
 
     /**
      * @return string
@@ -75,10 +84,13 @@ class ProjectDTO
 
     /**
      * @param string $name
+     * @return ProjectDTO
      */
-    public function setName(string $name): void
+    public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
     }
 
     /**
@@ -91,26 +103,32 @@ class ProjectDTO
 
     /**
      * @param string $description
+     * @return ProjectDTO
      */
-    public function setDescription(string $description): void
+    public function setDescription(string $description): self
     {
         $this->description = $description;
+
+        return $this;
     }
 
     /**
-     * @return ArrayCollection
+     * @return Collection
      */
-    public function getTechnology()
+    public function getTechnology(): ?Collection
     {
         return $this->technology;
     }
 
     /**
-     * @param ArrayCollection $technology
+     * @param Collection $technology
+     * @return $this
      */
-    public function setTechnology(ArrayCollection $technology): void
+    public function setTechnology(Collection $technology): self
     {
         $this->technology = $technology;
+
+        return $this;
     }
 
     /**
@@ -123,23 +141,32 @@ class ProjectDTO
 
     /**
      * @param string $note
+     * @return ProjectDTO
      */
-    public function setNote(string $note): void
+    public function setNote(string $note): self
     {
         $this->note = $note;
+
+        return $this;
     }
 
     /**
-     * @return UploadedFile|null
+     * @return UploadedFile
      */
-    public function getPicture(): ?UploadedFile
+    public function getPicture(): UploadedFile
     {
         return $this->picture;
     }
 
-    public function setPicture(UploadedFile $picture): void
+    /**
+     * @param UploadedFile $picture
+     * @return $this
+     */
+    public function setPicture(UploadedFile $picture): self
     {
         $this->picture = $picture;
+
+        return $this;
     }
 
     /**
@@ -152,10 +179,13 @@ class ProjectDTO
 
     /**
      * @param string $pictureDescription
+     * @return ProjectDTO
      */
-    public function setPictureDescription(string $pictureDescription): void
+    public function setPictureDescription(string $pictureDescription): self
     {
         $this->pictureDescription = $pictureDescription;
+
+        return $this;
     }
 
     /**
@@ -168,10 +198,13 @@ class ProjectDTO
 
     /**
      * @param string $github
+     * @return ProjectDTO
      */
-    public function setGithub(string $github): void
+    public function setGithub(string $github): self
     {
         $this->github = $github;
+
+        return $this;
     }
 
     /**
@@ -184,9 +217,12 @@ class ProjectDTO
 
     /**
      * @param string $link
+     * @return ProjectDTO
      */
-    public function setLink(string $link): void
+    public function setLink(string $link): self
     {
         $this->link = $link;
+
+        return $this;
     }
 }

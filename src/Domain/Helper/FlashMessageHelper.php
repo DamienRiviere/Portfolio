@@ -2,6 +2,7 @@
 
 namespace App\Domain\Helper;
 
+use phpDocumentor\Reflection\Types\Mixed_;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -21,6 +22,9 @@ class FlashMessageHelper
         $this->flash = $flash;
     }
 
+    /**
+     * @return mixed
+     */
     public function getFlashMessageCreate()
     {
         return $this->flash->add(
@@ -29,6 +33,9 @@ class FlashMessageHelper
         );
     }
 
+    /**
+     * @return mixed
+     */
     public function getFlashMessageUpdate()
     {
         return $this->flash->add(
@@ -37,6 +44,9 @@ class FlashMessageHelper
         );
     }
 
+    /**
+     * @return mixed
+     */
     public function getFlashMessageDelete()
     {
         return $this->flash->add(

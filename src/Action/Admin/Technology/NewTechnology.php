@@ -58,7 +58,7 @@ final class NewTechnology
      */
     public function __invoke(Request $request, ViewResponder $view, RedirectResponder $redirect)
     {
-        $form = $this->formHelper->getFormType($request, TechnologyType::class);
+        $form = $this->formHelper->getFormType($request, TechnologyType::class, null);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $technology = Technology::create($form->getData());
