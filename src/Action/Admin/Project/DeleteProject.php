@@ -6,6 +6,7 @@ use App\Domain\Helper\FlashMessageHelper;
 use App\Responder\RedirectResponder;
 use App\Entity\Project;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -34,7 +35,11 @@ final class DeleteProject
         $this->flash = $flash;
     }
 
-
+    /**
+     * @param Project $project
+     * @param RedirectResponder $redirect
+     * @return RedirectResponse
+     */
     public function __invoke(Project $project, RedirectResponder $redirect)
     {
         unlink("uploads/" . $project->getPicture()->getName());
