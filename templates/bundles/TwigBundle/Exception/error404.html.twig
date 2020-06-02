@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page introuvable{% endblock %}
+
+{% block body %}
+    <div class="container-fluid bg-light py-5 text-center">
+        <h2 class="text-color-red">
+            <i class="fas fa-exclamation-triangle"></i>
+            Erreur 404</h2>
+        <p class="font-weight-bold mb-0">Vous vous êtes trompé de page !</p>
+    </div>
+
+    <div class="container py-5 text-center">
+        <h1>La page que vous recherchez est introuvable !</h1>
+
+        <div class="alert alert-danger">
+            <p class="mb-0">{{ exception.message }}</p>
+        </div>
+
+        <a href="{{ path('home') }}" class="btn background-color-red text-white">
+            <i class="fas fa-home mr-1"></i>
+            Accueil
+        </a>
+    </div>
+{% endblock %}

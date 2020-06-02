@@ -11,6 +11,8 @@ use App\Repository\TechnologyRepository;
 use App\Responder\RedirectResponder;
 use App\Responder\ViewResponder;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityNotFoundException;
+use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -67,10 +69,12 @@ final class UpdateTechnology
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
+     * @throws EntityNotFoundException
+     * @throws NonUniqueResultException
      */
     public function __invoke(Request $request, ViewResponder $view, string $slug, RedirectResponder $redirect)
     {
-        $technology = $this->technoRepository->findOneBy(['slug' => $slug]);
+        $technology = $this->technoRepository->findOneTechnology($slug);
         $form = $this->formHelper->getFormType($request, TechnologyType::class, TechnologyDTO::class, $technology);
 
         if ($form->isSubmitted() && $form->isValid()) {

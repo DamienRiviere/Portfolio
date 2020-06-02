@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accès refusé !{% endblock %}
+
+{% block body %}
+    <div class="container-fluid bg-light py-5 text-center">
+        <h2 class="text-color-red">
+            <i class="fas fa-exclamation-triangle"></i>
+            Erreur 403
+        </h2>
+        <p class="font-weight-bold mb-0">Vous ne pouvez pas accéder à cette page !</p>
+    </div>
+
+    <div class="container py-5 text-center">
+        <h1>Accès refusé !</h1>
+        <div class="alert alert-danger">
+            <p class="mb-0">Vous n'avez pas les droits pour accéder à cette page !</p>
+        </div>
+
+        <a href="{{ path('home') }}" class="btn background-color-red text-white">
+            <i class="fas fa-home mr-1"></i>
+            Accueil
+        </a>
+    </div>
+{% endblock %}

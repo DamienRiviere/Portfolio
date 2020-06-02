@@ -10,6 +10,8 @@ use App\Repository\ProjectRepository;
 use App\Responder\RedirectResponder;
 use App\Responder\ViewResponder;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityNotFoundException;
+use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -67,10 +69,12 @@ final class UpdateProject
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
+     * @throws EntityNotFoundException
+     * @throws NonUniqueResultException
      */
     public function __invoke(Request $request, ViewResponder $view, RedirectResponder $redirect, string $slug)
     {
-        $project = $this->projectRepository->findOneBy(["slug" => $slug]);
+        $project = $this->projectRepository->findOneProject($slug);
         $form = $this->formHelper->getFormType($request, ProjectType::class, ProjectDTO::class, $project);
 
         if ($form->isSubmitted() && $form->isValid()) {

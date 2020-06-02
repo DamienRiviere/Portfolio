@@ -26,13 +26,14 @@ final class ViewResponder
     /**
      * @param string $template
      * @param array $paramsTemplate
+     * @param int|null $statusCode
      * @return Response
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    public function __invoke(string $template, array $paramsTemplate = [])
+    public function __invoke(string $template, array $paramsTemplate = [], ?int $statusCode = 200)
     {
-        return new Response($this->templating->render($template, $paramsTemplate));
+        return new Response($this->templating->render($template, $paramsTemplate), $statusCode);
     }
 }
