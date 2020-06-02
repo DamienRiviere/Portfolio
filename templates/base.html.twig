@@ -6,9 +6,26 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>{% block title %}{% endblock %}</title>
 
+        <!-- Favicons -->
+        <link href="{{ asset('img/favicon/favicon-32x32.png') }}" type="img/png" rel="icon" />
+        <link rel="icon" type="img/png" href="{{ asset('img/favicon/favicon-32x32.png') }}" sizes="32x32">
+        <link rel="icon" type="img/png" href="{{ asset('img/favicon/favicon-16x16.png') }}" sizes="16x16">
+
+        <!-- Twitter Card data -->
+        <meta name="twitter:card" content="summary"/>
+        <meta name="twitter:title" content="Damien RIVIERE: Développeur PHP/Symfony"/>
+        <meta name="twitter:image:src" content="{{ asset('img/portfolio.png') }}"/>
+        <meta name="twitter:description" content="Portfolio de Damien Riviere : Développeur PHP/Symfony"/>
+
+        <!-- Facebook Open Graph data -->
+        <meta property="og:title" content="Damien RIVIERE: Développeur PHP/Symfony"/>
+        <meta property="og:type" content="website"/>
+        <meta property="og:url" content="http://d-riviere.fr/"/>
+        <meta property="og:image" content="{{ asset('img/portfolio.png') }}"/>
+        <meta property="og:description" content="Portfolio de Damien Riviere : Développeur PHP/Symfony"/>
+
         {% block stylesheets %}
             <!-- Font Google -->
-            <link href="https://fonts.googleapis.com/css?family=Permanent+Marker" rel="stylesheet">
             <link href="https://fonts.googleapis.com/css?family=Comfortaa" rel="stylesheet">
             {{ encore_entry_link_tags('app') }}
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">

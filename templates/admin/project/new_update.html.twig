@@ -38,15 +38,23 @@
 
             {{ form_row(form.note) }}
 
-            {{ form_row(form.picture) }}
+            {% if route == "admin_project_new" %}
+                {{ form_row(form.picture) }}
 
-            {{ form_row(form.pictureDescription) }}
+                {{ form_row(form.pictureDescription) }}
+            {% endif %}
 
             {{ form_row(form.github) }}
 
             {{ form_row(form.link) }}
 
-            <button type="submit" class="btn btn-primary btn-block">Créer</button>
+            <button type="submit" class="btn btn-primary btn-block">
+                {% if route == "admin_project_new" %}
+                    Créer
+                {% else %}
+                    Modifier
+                {% endif %}
+            </button>
 
             {{ form_end(form) }}
         </div>

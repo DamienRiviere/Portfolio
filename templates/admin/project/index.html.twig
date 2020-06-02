@@ -45,10 +45,10 @@
                             <td>{{ project.slug }}</td>
                             <td>
                                 <div class="btn-group" role="group">
-                                    <a href="" class="btn btn-md btn-secondary" title="Modifier la technologie">
+                                    <a href="{{ path('admin_project_update', {'slug': project.slug}) }}" class="btn btn-md btn-secondary" title="Modifier le projet">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <a href="" class="btn btn-md btn-danger delete-link" title="Supprimer la technologie">
+                                    <a href="" class="btn btn-md btn-danger delete-link" title="Supprimer le projet">
                                         <i class="fas fa-trash"></i>
                                     </a>
                                 </div>

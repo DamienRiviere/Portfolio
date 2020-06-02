@@ -28,11 +28,11 @@ class FormHelper
     /**
      * @param Request $request
      * @param string $classType
-     * @param null $classDto
+     * @param string|null $classDto
      * @param null $object
      * @return FormInterface
      */
-    public function getFormType(Request $request, string $classType, $classDto = null, $object = null): FormInterface
+    public function getFormType(Request $request, string $classType, ?string $classDto, $object = null): FormInterface
     {
         $dto = null;
         if ($request->attributes->get('slug')) {

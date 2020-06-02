@@ -7,6 +7,7 @@ use Cocur\Slugify\Slugify;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\PersistentCollection;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ProjectRepository")
@@ -83,6 +84,23 @@ class Project
             ->setLink($projectDTO->getLink())
             ->setTechnology($projectDTO->getTechnology())
         ;
+
+        return $project;
+    }
+
+    public static function update(ProjectDTO $projectDTO, Project $project): Project
+    {
+        $project
+            ->setName($projectDTO->getName())
+            ->setDescription($projectDTO->getDescription())
+            ->setNote($projectDTO->getNote())
+            ->setGithub($projectDTO->getGithub())
+            ->setLink($projectDTO->getLink())
+        ;
+
+        foreach ($projectDTO->getTechnology() as $technology) {
+            $project->addTechnology($technology);
+        }
 
         return $project;
     }
@@ -182,14 +200,14 @@ class Project
     }
 
     /**
-     * @return Collection|Technology[]
+     * @return Collection
      */
     public function getTechnology(): Collection
     {
         return $this->technology;
     }
 
-    public function setTechnology(ArrayCollection $technology): self
+    public function setTechnology(Collection $technology): self
     {
         foreach ($technology->getValues() as $techno) {
             $this->technology[] = $techno;

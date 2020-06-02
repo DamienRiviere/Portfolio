@@ -89,6 +89,10 @@ li.timeline-item::before {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
 
+ul.skills-list {
+    padding-left: 0px;
+}
+
 .skills-list li {
     display: inline-block;
     padding: 0 1em;
@@ -139,4 +143,52 @@ li.timeline-item::before {
 
 .card-login {
     margin-top: 40%;
+}
+
+@media screen and (max-width: 991px) {
+    .skills-center {
+        text-align: center;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .content-center {
+        text-align: center;
+    }
+
+    ul.timeline:before {
+        display: none;
+    }
+
+    li.timeline-item::before {
+        display: none;
+    }
+
+    .timeline-arrow {
+        display: none;
+    }
+
+    li.timeline-item {
+        margin-left:0px !important;
+    }
+
+    ul.timeline {
+        padding-left: 0px !important;
+    }
+}
+
+@media screen and (max-width: 425px) {
+    .icon-disabled {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 375px) {
+    li {
+        list-style-type: none;
+    }
+
+    ul {
+        padding-left: 0px;
+    }
 }
