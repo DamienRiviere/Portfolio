@@ -4,6 +4,8 @@ namespace App\Repository;
 
 use App\Entity\Technology;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityNotFoundException;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -19,32 +21,25 @@ class TechnologyRepository extends ServiceEntityRepository
         parent::__construct($registry, Technology::class);
     }
 
-    // /**
-    //  * @return Technology[] Returns an array of Technology objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @param string $slug
+     * @return Technology
+     * @throws EntityNotFoundException
+     * @throws NonUniqueResultException
+     */
+    public function findOneTechnology(string $slug): Technology
     {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('t.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Technology
-    {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
+        $query = $this->createQueryBuilder('t')
+            ->where('t.slug = :slug')
+            ->setParameter('slug', $slug)
             ->getQuery()
             ->getOneOrNullResult()
         ;
+
+        if ($query instanceof Technology) {
+            return $query;
+        }
+
+        throw new EntityNotFoundException("Technologie introuvable !");
     }
-    */
 }
