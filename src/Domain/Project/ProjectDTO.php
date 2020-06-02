@@ -153,7 +153,7 @@ class ProjectDTO
     /**
      * @return UploadedFile
      */
-    public function getPicture(): UploadedFile
+    public function getPicture(): ?UploadedFile
     {
         return $this->picture;
     }
