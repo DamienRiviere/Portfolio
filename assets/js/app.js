@@ -23,7 +23,8 @@ const $ = require('jquery');
         }
     });
 
-    function scroll() {
+    function scroll()
+    {
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', (e) => {
                 e.preventDefault();
@@ -35,8 +36,42 @@ const $ = require('jquery');
         });
     }
 
+    function modalDelete()
+    {
+        $(document).on("click", ".delete-item", function () {
+            let id = $(this).data("id");
+            let name = $(this).data("name");
+
+            $(".modal-delete-item").attr("data-id", +id);
+            $(".modal-delete-item").attr("data-name", +name);
+            $(".modal-title").append("Supprimer " + name);
+            $(".modal-body").append("Êtes-vous sur de vouloir supprimer " + name + " ?");
+        });
+
+        let url = checkAdminUrl();
+
+        $(document).on("click", ".modal-delete-item", function () {
+            let id = $(this).data("id");
+            let name = $(this).data("name");
+
+            $(".modal-delete-item").attr("href", "/admin/" + url + "/delete/" + id);
+        });
+    }
+
+    function checkAdminUrl()
+    {
+        if (window.location.pathname === "/admin/technology") {
+            return "technology";
+        }
+
+        if (window.location.pathname === "/admin/project") {
+            return "project";
+        }
+    }
+
     window.onload = (() => {
         scroll();
+        modalDelete();
     });
 })($); // End of use strict
 
