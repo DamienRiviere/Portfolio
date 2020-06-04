@@ -48,7 +48,7 @@
                                     <a href="{{ path('admin_technology_update', {'slug': techno.slug}) }}" class="btn btn-md btn-secondary" title="Modifier la technologie">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <a href="{{ path('admin_technology_delete', {'id': techno.id}) }}" class="btn btn-md btn-danger delete-link" title="Supprimer la technologie">
+                                    <a href="" class="btn btn-md btn-danger delete-item" title="Supprimer la technologie" data-toggle="modal" data-target="#deleteItem" data-id="{{ techno.id }}" data-name="{{ techno.name }}">
                                         <i class="fas fa-trash"></i>
                                     </a>
                                 </div>
@@ -60,4 +60,6 @@
             </div>
         </div>
     </div>
+
+    {% include 'admin/partials/_modal_delete.html.twig' %}
 {% endblock %}

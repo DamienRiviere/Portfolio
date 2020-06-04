@@ -48,7 +48,7 @@
                                     <a href="{{ path('admin_project_update', {'slug': project.slug}) }}" class="btn btn-md btn-secondary" title="Modifier le projet">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <a href="{{ path('admin_project_delete', {'id': project.id}) }}" class="btn btn-md btn-danger delete-link" title="Supprimer le projet">
+                                    <a href="" class="btn btn-md btn-danger delete-item" title="Supprimer le projet" data-toggle="modal" data-target="#deleteItem" data-id="{{ project.id }}" data-name="{{ project.name }}">
                                         <i class="fas fa-trash"></i>
                                     </a>
                                 </div>
@@ -60,4 +60,6 @@
             </div>
         </div>
     </div>
+
+    {% include 'admin/partials/_modal_delete.html.twig' %}
 {% endblock %}
